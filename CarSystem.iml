@@ -12,6 +12,7 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/dependence/c3p0-0.9.5.5.jar!/" />
+          <root url="jar://$MODULE_DIR$/dependence/mchange-commons-java-0.2.19.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -21,14 +22,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/dependence/commons-dbutils-1.7.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/dependence/commons-io-2.7.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -39,6 +32,7 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/dependence/junit-4.13.jar!/" />
+          <root url="jar://$MODULE_DIR$/dependence/hamcrest-2.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -48,15 +42,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/dependence/mariadb-java-client-2.6.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/dependence/mchange-commons-java-0.2.19.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
