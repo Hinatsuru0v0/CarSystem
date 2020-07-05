@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="car_system@119.3.172.190" uuid="4a48ce68-2365-4d31-8be8-b5ce78fcb87c">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://119.3.172.190:3306/car_system</jdbc-url>
+    </data-source>
+  </component>
+</project>
