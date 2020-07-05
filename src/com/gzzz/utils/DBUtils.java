@@ -9,7 +9,7 @@ import org.apache.commons.dbutils.QueryRunner;
  * @version 1.0.0
  */
 public class DBUtils {
-    public final static ComboPooledDataSource dataSource = new ComboPooledDataSource();
+    public static final ComboPooledDataSource dataSource = new ComboPooledDataSource();
 
-    public final static QueryRunner runner = new QueryRunner(dataSource);
+    public static final QueryRunner runner = new QueryRunner(dataSource);
 }
