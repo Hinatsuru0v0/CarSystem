@@ -9,7 +9,7 @@ import java.util.List;
 public class ModelDAOTest {
     @Test
     public void testListModelsByBrand() {
-        List<Model> models = ModelDAO.listModelsByBrand("奥迪");
+        List<Model> models = ModelDAO.listModelsByBrand(1001);
         if (!models.isEmpty()) {
             for (Model model : models) {
                 System.out.println("车型:" + model.getModel_name());

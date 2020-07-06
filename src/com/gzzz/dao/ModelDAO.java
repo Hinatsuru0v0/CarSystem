@@ -15,10 +15,10 @@ import static com.gzzz.utils.DBUtils.runner;
  * @version 1.0.0
  */
 public class ModelDAO {
-    public static List<Model> listModelsByBrand(String brand_name){
-        String sql = "SELECT model_name FROM model, brand WHERE brand.brand_id=model.brand_id AND brand_name=?";
+    public static List<Model> listModelsByBrand(int brand_id){
+        String sql = "SELECT * FROM model WHERE brand_id=?";
         try {
-            return runner.query(sql, new BeanListHandler<>(Model.class), brand_name);
+            return runner.query(sql, new BeanListHandler<>(Model.class), brand_id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

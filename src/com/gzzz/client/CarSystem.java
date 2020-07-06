@@ -4,8 +4,11 @@ import com.gzzz.dao.BrandDAO;
 import com.gzzz.dao.CarDAO;
 import com.gzzz.dao.ModelDAO;
 import com.gzzz.dao.UserDAO;
+import com.gzzz.entity.Brand;
 import com.gzzz.entity.Car;
+import com.gzzz.entity.Model;
 import com.gzzz.entity.User;
+import com.gzzz.utils.DateUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +29,6 @@ import static com.gzzz.utils.LogUtils.logger;
 public class CarSystem {
     Scanner sc = new Scanner(System.in);
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
-    Random random = new Random();
 
     boolean is_login = false;
     boolean is_admin = false;
@@ -49,7 +51,8 @@ public class CarSystem {
             case "1": verifyAccount();break;
             case "2": registerAccount();break;
             case "3": updatedCarsDisplay();break;
-            case "5": System.exit(0);
+            case "4": runFind();break;
+            case "5": System.exit(0);break;
         }
         run();
     }
@@ -60,7 +63,8 @@ public class CarSystem {
         String startSelector = sc.next();
         switch (startSelector) {
             case "1": updatedCarsDisplay();break;
-            case "3": System.exit(0);
+            case "2": runFind();break;
+            case "3": System.exit(0);break;
         }
         run();
     }
@@ -71,9 +75,23 @@ public class CarSystem {
         String startSelector = sc.next();
         switch (startSelector) {
             case "1": updatedCarsDisplay();break;
-            case "4": System.exit(0);
+            case "2": runFind();break;
+            case "4": System.exit(0);break;
         }
         run();
+    }
+
+    public void runFind() {
+        findStartMenu();
+        sc = new Scanner(System.in);
+        String findSelector = sc.next();
+        switch (findSelector) {
+            case "1": findCarsByBrand(findModels(findBrands()));break;
+            case "2": findCarsByPrice();break;
+            case "3": findCarsByTime();break;
+            case "4": run();break;
+        }
+        runFind();
     }
 
     public void await() {
@@ -162,11 +180,33 @@ public class CarSystem {
         System.out.print("请输入要执行的方法代号: ");
     }
 
+    public void findStartMenu() {
+        System.out.println();
+        System.out.println("--------二手车搜索--------");
+        System.out.println("1.根据品牌搜索");
+        System.out.println("2.根据价格搜索");
+        System.out.println("3.根据上牌日期搜索");
+        System.out.println("4.返回主菜单");
+        System.out.print("请输入要执行的方法代号: ");
+    }
+
+    public void findPriceMenu() {
+        System.out.println();
+        System.out.println("1. 10万以下");
+        System.out.println("2. 10-25万");
+        System.out.println("3. 25-40万");
+        System.out.println("4. 40万以上");
+        System.out.print("请输入要选择的价格区间: ");
+    }
+
     public void updatedCarsDisplay() {
+        CarsDisplay(CarDAO.listUpdatedCars());
+    }
+
+    public void CarsDisplay(List<Car> cars) {
         System.out.println();
         System.out.println("--------最新二手车信息--------");
         System.out.println("序号\t品牌\t车型\t总里程\t价格\t\t发布时间");
-        List<Car> cars = CarDAO.listUpdatedCars();
         int id = 1;
         if (!cars.isEmpty()) {
             for (Car car: cars) {
@@ -184,6 +224,7 @@ public class CarSystem {
 
     public void carDescription(Car car) {
         System.out.println();
+        System.out.println("--------二手车详细信息--------");
         System.out.println("品牌\t车型\t排量\t\t总里程\t离合器类型\t价格\t\t上牌时间\t\t发布时间");
         System.out.println(BrandDAO.getBrand(car.getBrand_id()).getBrand_name() + "\t" + ModelDAO.getModel(car.getModel_id()).getModel_name() + "\t"
                 + car.getExhaust() + "\t" + decimalFormat.format(car.getMilage()/10000.0) + "万" + "\t" + car.getClutch() + "\t\t\t"
@@ -211,5 +252,76 @@ public class CarSystem {
             }
         }
         await();
+    }
+
+    public Brand findBrands() {
+        System.out.println();
+        System.out.println("--------二手车品牌信息--------");
+        List<Brand> brands = BrandDAO.listBrands();
+        int id = 1;
+        if (!brands.isEmpty()) {
+            for (Brand brand: brands) {
+                System.out.println(id++ +"."+ brand.getBrand_name());
+            }
+            System.out.print("请输入你要查看的二手车品牌: ");
+            return brands.get(Integer.parseInt(sc.next())-1);
+        } else {
+            System.out.println("暂无二手车品牌信息！请稍后再试！");
+            await();
+        }
+        return null;
+    }
+
+    public Model findModels(Brand brand) {
+        System.out.println();
+        System.out.println("--------二手车车型信息--------");
+        List<Model> models = ModelDAO.listModelsByBrand(brand.getBrand_id());
+        int id = 1;
+        if (!models.isEmpty()) {
+            for (Model model: models) {
+                System.out.println(id++ + "." + model.getModel_name());
+            }
+            System.out.print("请输入你要查看的二手车车型: ");
+            return models.get(Integer.parseInt(sc.next())-1);
+        } else {
+            System.out.println("暂无二手车车型信息！请稍后再试！");
+            await();
+        }
+        return null;
+    }
+
+    public void findCarsByBrand(Model model) {
+        System.out.println();
+        CarsDisplay(CarDAO.listCarsByModel(model.getModel_id()));
+    }
+
+    public void findCarsByPrice() {
+        findPriceMenu();
+        sc = new Scanner(System.in);
+        String priceSelector = sc.next();
+        switch (priceSelector) {
+            case "1": CarsDisplay(CarDAO.listCarsByPrice(0, 100000));break;
+            case "2": CarsDisplay(CarDAO.listCarsByPrice(100000, 250000));break;
+            case "3": CarsDisplay(CarDAO.listCarsByPrice(250000, 400000));break;
+            case "4": CarsDisplay(CarDAO.listCarsByMaxPrice(400000));break;
+        }
+        runFind();
+    }
+
+    public void findCarsByTime() {
+        System.out.println();
+        System.out.print("请输入要搜索的起始年份:");
+        String start_year = sc.next();
+        System.out.print("请输入要搜索的起始月份:");
+        String start_month = sc.next();
+        System.out.println("----------------");
+        System.out.print("请输入要搜索的结束年份:");
+        String end_year = sc.next();
+        System.out.print("请输入要搜索的结束月份:");
+        String end_month = sc.next();
+        String start_time = start_year + "-" + start_month + "-" + "01";
+        String end_time = end_year + "-" + end_month + "-" + DateUtils.monthOfYear(Integer.parseInt(end_year), Integer.parseInt(end_month));
+        CarsDisplay(CarDAO.listCarsByTime(start_time, end_time));
+
     }
 }

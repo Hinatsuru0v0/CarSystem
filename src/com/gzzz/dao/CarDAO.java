@@ -45,10 +45,20 @@ public class CarDAO {
         return null;
     }
 
-    public  static List<Car> listCarsByPrice(double minprice,double maxprice){
-        String sql = "SELECT * FROM car WHERE price>? AND price<? AND is_sold=false";
+    public  static List<Car> listCarsByPrice(double minprice, double maxprice){
+        String sql = "SELECT * FROM car WHERE price>=? AND price<? AND is_sold=false";
         try{
             return runner.query(sql, new BeanListHandler<>(Car.class), minprice, maxprice);
+        } catch(SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public  static List<Car> listCarsByMaxPrice(double maxprice){
+        String sql = "SELECT * FROM car WHERE price>=? AND is_sold=false";
+        try{
+            return runner.query(sql, new BeanListHandler<>(Car.class), maxprice);
         } catch(SQLException throwables){
             throwables.printStackTrace();
         }
@@ -66,7 +76,7 @@ public class CarDAO {
     }
 
     public static List<Car> listCarsByTime(String start_time,String end_time){
-        String sql = "SELECT * FROM car WHERE ?<=publish_time AND publish_time<=? AND is_sold=false";
+        String sql = "SELECT * FROM car WHERE ?<=issue_time AND issue_time<=? AND is_sold=false";
         try{
             return runner.query(sql, new BeanListHandler<>(Car.class), start_time, end_time);
         } catch(SQLException throwables){

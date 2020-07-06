@@ -48,6 +48,18 @@ public class CarDAOTest {
     }
 
     @Test
+    public void testListCarsByMaxPrice() {
+        List<Car> cars = CarDAO.listCarsByMaxPrice(300000);
+        if (!cars.isEmpty()) {
+            for (Car car : cars) {
+                System.out.println(car);
+            }
+        } else {
+            System.out.println("数据库未找到二手车信息！");
+        }
+    }
+
+    @Test
     public void testListCarsByModel() {
         List<Car> cars = CarDAO.listCarsByModel(100101);
         if (!cars.isEmpty()) {
@@ -68,7 +80,7 @@ public class CarDAOTest {
 
     @Test
     public void testListCarByTime() {
-        String start = "2020-07-01" ;
+        String start = "2018-07-01" ;
         String end = "2020-07-07";
         List<Car> cars = CarDAO.listCarsByTime(start, end);
         if (!cars.isEmpty()) {
