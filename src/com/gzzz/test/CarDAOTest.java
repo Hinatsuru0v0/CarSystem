@@ -67,4 +67,18 @@ public class CarDAOTest {
             System.out.println("二手车数据添加失败！");
         }
     }
+
+    @Test
+    public void testListCarByTime() {
+        String x = "2020-07-01" ;
+        String y = "2020-07-07";
+        List<Car> cars = CarDAO.listCarsByTime(x, y);
+        if (cars != null) {
+            for (Car car : cars) {
+                System.out.println(car);
+            }
+        } else {
+            System.out.println("数据库未找到二手车信息！");
+        }
+    }
 }

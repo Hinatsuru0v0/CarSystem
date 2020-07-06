@@ -64,4 +64,14 @@ public class CarDAO {
         }
         return 0;
     }
+
+    public static List<Car> listCarsByTime(String start_time,String end_time){
+        String sql = "SELECT * FROM car WHERE ?<=publish_time  AND publish_time<=?";
+        try{
+            return runner.query(sql, new BeanListHandler<>(Car.class), start_time, end_time);
+        } catch(SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 }

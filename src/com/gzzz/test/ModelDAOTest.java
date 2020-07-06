@@ -18,14 +18,16 @@ public class ModelDAOTest {
             System.out.println("数据库未找到品牌车型信息！");
         }
     }
+
     @Test
     public void testRemoveModel() {
         int model = ModelDAO.removeModel(100101);
-        System.out.println("删除的二手车数据数:" + model);
+        System.out.println("删除的车型总数:" + model);
     }
+
     @Test
-    public void testinsertModel() {
-        int model = ModelDAO.insertModel(100101,1001,"A4L");
-        System.out.println(model);
+    public void testInsertModel() {
+        int model = ModelDAO.insertModel(100101,1001,"A4L", "");
+        System.out.println("添加的车型总数:" + model);
     }
 }
