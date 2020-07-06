@@ -12,7 +12,7 @@ public class ModelDAOTest {
         List<Model> models = ModelDAO.listModelsByBrand("奥迪");
         if (models != null) {
             for (Model model : models) {
-                System.out.println(model.getModel_name());
+                System.out.println("车型:" + model.getModel_name());
             }
         } else {
             System.out.println("数据库未找到品牌车型信息！");
