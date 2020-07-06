@@ -10,7 +10,7 @@ public class ModelDAOTest {
     @Test
     public void testListModelsByBrand() {
         List<Model> models = ModelDAO.listModelsByBrand("奥迪");
-        if (models != null) {
+        if (!models.isEmpty()) {
             for (Model model : models) {
                 System.out.println("车型:" + model.getModel_name());
             }

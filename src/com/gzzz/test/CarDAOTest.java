@@ -16,7 +16,7 @@ public class CarDAOTest {
     @Test
     public void testListUpdatedCars() {
         List<Car> cars = CarDAO.listUpdatedCars();
-        if (cars != null) {
+        if (!cars.isEmpty()) {
             for (Car car : cars) {
                 System.out.println(car);
             }
@@ -38,7 +38,7 @@ public class CarDAOTest {
     @Test
     public void testListCarsByPrice() {
         List<Car> cars = CarDAO.listCarsByPrice(200000, 300000);
-        if (cars != null) {
+        if (!cars.isEmpty()) {
             for (Car car : cars) {
                 System.out.println(car);
             }
@@ -50,7 +50,7 @@ public class CarDAOTest {
     @Test
     public void testListCarsByModel() {
         List<Car> cars = CarDAO.listCarsByModel(100101);
-        if (cars != null) {
+        if (!cars.isEmpty()) {
             for (Car car : cars) {
                 System.out.println(car);
             }
@@ -62,24 +62,27 @@ public class CarDAOTest {
     @Test
     public void testInsertCar() {
         int modifyCount = CarDAO.insertCar(1001, 100102, "2.0T", 100000, 195800, "自动", "2019-08-01");
-        if (modifyCount == 1) {
-            System.out.println("添加二手车的数量:" + modifyCount);
-        } else {
-            System.out.println("二手车数据添加失败！");
-        }
+        System.out.println("添加二手车的数量:" + modifyCount);
+
     }
 
     @Test
     public void testListCarByTime() {
-        String x = "2020-07-01" ;
-        String y = "2020-07-07";
-        List<Car> cars = CarDAO.listCarsByTime(x, y);
-        if (cars != null) {
+        String start = "2020-07-01" ;
+        String end = "2020-07-07";
+        List<Car> cars = CarDAO.listCarsByTime(start, end);
+        if (!cars.isEmpty()) {
             for (Car car : cars) {
                 System.out.println(car);
             }
         } else {
             System.out.println("数据库未找到二手车信息！");
         }
+    }
+
+    @Test
+    public void testUpdateSoldCar() {
+        int modifyCount = CarDAO.updateSoldCar(2);
+        System.out.println("已修改售出二手车的数量:" + modifyCount);
     }
 }

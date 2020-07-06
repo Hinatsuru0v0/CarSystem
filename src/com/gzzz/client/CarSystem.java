@@ -77,7 +77,7 @@ public class CarSystem {
     }
 
     public void await() {
-        System.out.print("ENTER ANY KEY TO CONTINUE...");
+        System.out.print("按下任意键继续...");
         try {
             new BufferedReader(new InputStreamReader(System.in)).readLine();
         } catch (IOException e) {
@@ -168,17 +168,48 @@ public class CarSystem {
         System.out.println("序号\t品牌\t车型\t总里程\t价格\t\t发布时间");
         List<Car> cars = CarDAO.listUpdatedCars();
         int id = 1;
-        if (cars != null) {
+        if (!cars.isEmpty()) {
             for (Car car: cars) {
                 System.out.println(id++ + "\t" + BrandDAO.getBrand(car.getBrand_id()).getBrand_name() + "\t" + ModelDAO.getModel(car.getModel_id()).getModel_name()
                 + "\t" + decimalFormat.format(car.getMilage()/10000.0) + "万" + "\t" + decimalFormat.format(car.getPrice()/10000.0) + "万" + "\t"
                 + simpleDateFormat.format(car.getPublish_time()));
             }
+            System.out.print("请输入你要查看的二手车序号: ");
+            carDescription(cars.get(Integer.parseInt(sc.next())-1));
+        } else {
+            System.out.println("暂无二手车信息！请稍后再试！");
+            await();
         }
-        System.out.print("请输入你要查看的二手车序号: ");
     }
 
     public void carDescription(Car car) {
-        System.out.println("品牌\t车型\t排量\t总里程\t价格\t");
+        System.out.println();
+        System.out.println("品牌\t车型\t排量\t\t总里程\t离合器类型\t价格\t\t上牌时间\t\t发布时间");
+        System.out.println(BrandDAO.getBrand(car.getBrand_id()).getBrand_name() + "\t" + ModelDAO.getModel(car.getModel_id()).getModel_name() + "\t"
+                + car.getExhaust() + "\t" + decimalFormat.format(car.getMilage()/10000.0) + "万" + "\t" + car.getClutch() + "\t\t\t"
+                + decimalFormat.format(car.getPrice()/10000.0) + "万" + "\t" + simpleDateFormat.format(car.getIssue_time())  + "\t" + simpleDateFormat.format(car.getIssue_time()));
+        carPurchase(car);
+    }
+
+    public void carPurchase(Car car) {
+        if (is_login) {
+            System.out.println("1.购买该二手车");
+            System.out.println("2.返回主菜单");
+            System.out.print("请输入要执行的方法代号: ");
+            String pSelector = sc.next();
+            if ("1".equals(pSelector)) {
+                System.out.println();
+                if (CarDAO.updateSoldCar(car.getCar_id()) == 1) {
+                    System.out.println("购买成功！");
+                } else {
+                    System.out.println("购买失败，请稍后再试！！");
+                }
+            } else if ("2".equals(pSelector)) {
+                run();
+            } else {
+                carDescription(car);
+            }
+        }
+        await();
     }
 }

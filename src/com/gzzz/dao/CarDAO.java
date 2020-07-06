@@ -74,4 +74,14 @@ public class CarDAO {
         }
         return null;
     }
+
+    public static int updateSoldCar(int car_id) {
+        String sql = "UPDATE car SET is_sold=true WHERE car_id=?";
+        try {
+            return runner.update(sql, car_id);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
 }

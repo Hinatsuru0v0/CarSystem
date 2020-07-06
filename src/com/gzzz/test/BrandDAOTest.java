@@ -11,7 +11,7 @@ public class BrandDAOTest {
     @Test
     public void testListBrands() {
         List<Brand> brands = BrandDAO.listBrands();
-        if (brands != null) {
+        if (brands.size() > 0) {
             for (Brand brand : brands) {
                 System.out.println("品牌名:" + brand.getBrand_name());
             }
