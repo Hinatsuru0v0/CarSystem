@@ -1,4 +1,4 @@
 package com.gzzz.test;
 
-public class TestCarDAO {
+public class CarDAOTest {
 }

@@ -3,9 +3,9 @@ package com.gzzz.test;
 import com.gzzz.dao.UserDAO;
 import org.junit.Test;
 
-public class TestUserDAO {
+public class UserDAOTest {
     @Test
-    public void registerUserTest() {
+    public void testRegisterUser() {
         int modifyCount = UserDAO.registerUser("test", "123456");
         System.out.println("Count of register user: " + modifyCount);
     }
