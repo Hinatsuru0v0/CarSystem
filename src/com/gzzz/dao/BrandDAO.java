@@ -19,7 +19,7 @@ public class BrandDAO {
     public static List<Brand> listBrands() {
         String sql = "SELECT * FROM brand";
         try {
-            return runner.query(sql,new BeanListHandler<>(Brand.class));
+            return runner.query(sql, new BeanListHandler<>(Brand.class));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -46,7 +46,7 @@ public class CarDAO {
     }
 
     public  static List<Car> listCarsByPrice(double minprice,double maxprice){
-        String sql = "SELECT * FROM car WHERE price>? AND price<? ";
+        String sql = "SELECT * FROM car WHERE price>? AND price<?";
         try{
             return runner.query(sql, new BeanListHandler<>(Car.class), minprice, maxprice);
         } catch(SQLException throwables){
@@ -56,9 +56,9 @@ public class CarDAO {
     }
 
     public static int insertCar(int brand_id,int moder_id,String exhaust,int milage,int price,String clutch,String issue_time){
-        String sql = "INSERT INTO car(brand_id,moder_id,exhaust,milage,price,clutch,issue_time) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO car(brand_id, model_id, exhaust, milage, price, clutch, issue_time) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            return runner.update(sql,brand_id,moder_id,exhaust,milage,price,clutch,issue_time);
+            return runner.update(sql, brand_id, moder_id, exhaust, milage, price, clutch, issue_time);
         }catch (SQLException throwables) {
             throwables.printStackTrace();
         }

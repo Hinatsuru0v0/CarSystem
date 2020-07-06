@@ -15,7 +15,7 @@ import static com.gzzz.utils.DBUtils.runner;
  */
 public class ModelDAO {
     public static List<Model> listModelsByBrand(String brand_name){
-        String sql = "SELECT model_name FROM model, brand WHERE brand.brand_id=model.brand_id AND brand_name=?;";
+        String sql = "SELECT model_name FROM model, brand WHERE brand.brand_id=model.brand_id AND brand_name=?";
         try {
             return runner.query(sql, new BeanListHandler<>(Model.class), brand_name);
         } catch (SQLException throwables) {
@@ -23,10 +23,11 @@ public class ModelDAO {
         }
         return null;
     }
+
     public static int removeModel(int model_id) {
-        String sql = "DELETE FROM model WHERE model_id=?; ";
+        String sql = "DELETE FROM model WHERE model_id=?";
         try {
-            return runner.update(sql,model_id) ;
+            return runner.update(sql, model_id) ;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

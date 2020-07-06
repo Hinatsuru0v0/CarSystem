@@ -47,7 +47,7 @@ public class CarDAOTest {
         }
     }
     @Test
-    public void listCarsByModel() {
+    public void testListCarsByModel() {
         List<Car> cars = CarDAO.listCarsByModel(100101);
         if (cars != null) {
             for (Car car : cars) {
@@ -60,11 +60,11 @@ public class CarDAOTest {
 
     @Test
     public void testInsertCar() {
-        int modifyCount = CarDAO.insertCar(1001,100102,"2.0T",100000,195800,"自动","2019-08-01");
-        if (modifyCount != 0) {
-            System.out.println(modifyCount);
+        int modifyCount = CarDAO.insertCar(1001, 100102, "2.0T", 100000, 195800, "自动", "2019-08-01");
+        if (modifyCount == 1) {
+            System.out.println("添加二手车的数量:" + modifyCount);
         } else {
-            System.out.println("数据未添加或已存在！");
+            System.out.println("二手车数据添加失败！");
         }
     }
 }
