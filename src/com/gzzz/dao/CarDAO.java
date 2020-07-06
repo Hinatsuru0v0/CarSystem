@@ -25,7 +25,15 @@ public class CarDAO {
         }
         return null;
     }
-
+    public static List<Car> listCarsByModel(int model_id){
+        String sql = "SELECT * FROM car WHERE model_id=?";
+        try {
+            return runner.query(sql, new BeanListHandler<>(Car.class),model_id);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
     public static Car getCar(int car_id) {
         String sql = "SELECT * FROM car WHERE car_id = ?";
         try {
