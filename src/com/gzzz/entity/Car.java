@@ -19,10 +19,11 @@ public class Car {
     private String clutch;
     private Date issue_time;
     private Date publish_time;
+    private boolean is_sold;
 
     public Car() {}
 
-    public Car(int car_id, int brand_id, int model_id, String exhaust, int milage, int price, String clutch, Date issue_time, Date publish_time) {
+    public Car(int car_id, int brand_id, int model_id, String exhaust, int milage, int price, String clutch, Date issue_time, Date publish_time, boolean is_sold) {
         this.car_id = car_id;
         this.brand_id = brand_id;
         this.model_id = model_id;
@@ -32,6 +33,7 @@ public class Car {
         this.clutch = clutch;
         this.issue_time = issue_time;
         this.publish_time = publish_time;
+        this.is_sold = is_sold;
     }
 
     public int getCar_id() {
@@ -104,6 +106,14 @@ public class Car {
 
     public void setPublish_time(Date publish_time) {
         this.publish_time = publish_time;
+    }
+
+    public boolean isIs_sold() {
+        return is_sold;
+    }
+
+    public void setIs_sold(boolean is_sold) {
+        this.is_sold = is_sold;
     }
 
     @Override

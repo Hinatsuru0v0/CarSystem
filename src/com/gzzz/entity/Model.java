@@ -9,13 +9,15 @@ public class Model {
     private int model_id;
     private int brand_id;
     private String model_name;
+    private String remark;
 
     public Model() {}
 
-    public Model(int model_id, int brand_id, String model_name) {
+    public Model(int model_id, int brand_id, String model_name, String remark) {
         this.model_id = model_id;
         this.brand_id = brand_id;
         this.model_name = model_name;
+        this.remark = remark;
     }
 
     public int getModel_id() {
@@ -40,5 +42,13 @@ public class Model {
 
     public void setModel_name(String model_name) {
         this.model_name = model_name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
