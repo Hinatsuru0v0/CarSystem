@@ -23,4 +23,14 @@ public class ModelDAO {
         }
         return null;
     }
+    public static int removeModel(int model_id) {
+        String sql = "DELETE FROM model WHERE model_id=?; ";
+        try {
+            return runner.update(sql,model_id) ;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
 }
+

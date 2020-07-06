@@ -1,7 +1,9 @@
 package com.gzzz.test;
 
 import com.gzzz.dao.ModelDAO;
+import com.gzzz.dao.UserDAO;
 import com.gzzz.entity.Model;
+import com.gzzz.entity.User;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,5 +19,10 @@ public class ModelDAOTest {
         } else {
             System.out.println("数据库未找到品牌车型信息！");
         }
+    }
+    @Test
+    public void removeModel() {
+        int model =ModelDAO.removeModel(100101);
+        System.out.println(model);
     }
 }
