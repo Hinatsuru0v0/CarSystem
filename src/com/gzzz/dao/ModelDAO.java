@@ -1,6 +1,7 @@
 package com.gzzz.dao;
 
 import com.gzzz.entity.Model;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.SQLException;
@@ -18,6 +19,16 @@ public class ModelDAO {
         String sql = "SELECT model_name FROM model, brand WHERE brand.brand_id=model.brand_id AND brand_name=?";
         try {
             return runner.query(sql, new BeanListHandler<>(Model.class), brand_name);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Model getModel(int model_id) {
+        String sql = "SELECT * FROM model WHERE model_id=?";
+        try {
+            return runner.query(sql, new BeanHandler<>(Model.class), model_id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

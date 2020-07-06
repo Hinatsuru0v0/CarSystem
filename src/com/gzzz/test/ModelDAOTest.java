@@ -20,6 +20,16 @@ public class ModelDAOTest {
     }
 
     @Test
+    public void testGetModel() {
+        Model model = ModelDAO.getModel(100101);
+        if (model != null) {
+            System.out.println("车型:" + model.getModel_name());
+        } else {
+            System.out.println("数据库未找到车型信息！");
+        }
+    }
+
+    @Test
     public void testRemoveModel() {
         int modifyCount = ModelDAO.removeModel(100101);
         System.out.println("删除的车型总数:" + modifyCount);

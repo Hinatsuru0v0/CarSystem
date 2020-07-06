@@ -21,6 +21,16 @@ public class BrandDAOTest {
     }
 
     @Test
+    public void testGetBrand() {
+        Brand brand = BrandDAO.getBrand(1001);
+        if (brand != null) {
+            System.out.println("品牌:" + brand.getBrand_name());
+        } else {
+            System.out.println("数据库未找到品牌信息！");
+        }
+    }
+
+    @Test
     public void testInsertBrand() {
         int modifyCount = BrandDAO.insertBrand(1004, "奔驰", "");
         System.out.println("添加的品牌总数:" + modifyCount);

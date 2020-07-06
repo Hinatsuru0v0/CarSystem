@@ -27,6 +27,16 @@ public class BrandDAO {
         return null;
     }
 
+    public static Brand getBrand(int brand_id) {
+        String sql = "SELECT * FROM brand WHERE brand_id=?";
+        try {
+            return runner.query(sql, new BeanHandler<>(Brand.class), brand_id);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public static int insertBrand(int brand_id,String brand_name,String remark) {
         String sql = "INSERT INTO brand VALUES(?, ?, ?)";
         try {
