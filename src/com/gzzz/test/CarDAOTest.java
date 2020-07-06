@@ -23,15 +23,4 @@ public class CarDAOTest {
             System.out.println("数据库未找到二手车信息！");
         }
     }
-    @Test
-    public void listModelsByBrand() {
-        List<Model> models = CarDAO.listModelsByBrand("奥迪");
-        if (models != null) {
-            for (Model model : models) {
-                System.out.println(model.getModel_name());
-            }
-        } else {
-            System.out.println("数据库未找到二手车信息！");
-        }
-    }
 }
