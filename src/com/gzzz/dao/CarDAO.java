@@ -1,7 +1,7 @@
 package com.gzzz.dao;
 
 import com.gzzz.entity.Car;
-import org.apache.commons.dbutils.handlers.BeanHandler;
+import com.gzzz.entity.Model;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.SQLException;
@@ -25,13 +25,4 @@ public class CarDAO {
         return null;
     }
 
-    public static Car getCar(int car_id) {
-        String sql = "SELECT * FROM car WHERE car_id = ?";
-        try {
-            return runner.query(sql,new BeanHandler<>(Car.class),car_id);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
 }
