@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ModelDAOTest {
     @Test
-    public void listModelsByBrand() {
+    public void testListModelsByBrand() {
         List<Model> models = ModelDAO.listModelsByBrand("奥迪");
         if (models != null) {
             for (Model model : models) {

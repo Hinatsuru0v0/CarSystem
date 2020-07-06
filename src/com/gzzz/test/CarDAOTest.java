@@ -25,8 +25,8 @@ public class CarDAOTest {
     }
 
     @Test
-    public void testGetCar(int car_id) {
-        Car cars = CarDAO.getCar(car_id);
+    public void testGetCar() {
+        Car cars = CarDAO.getCar(1);
         if (cars != null) {
             System.out.println(cars);
         } else {
