@@ -46,6 +46,7 @@ public class CarDAOTest {
             System.out.println("数据库未找到二手车信息！");
         }
     }
+
     @Test
     public void testListCarsByModel() {
         List<Car> cars = CarDAO.listCarsByModel(100101);

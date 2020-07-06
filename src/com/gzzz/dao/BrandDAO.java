@@ -1,6 +1,7 @@
 package com.gzzz.dao;
 
 import com.gzzz.entity.Brand;
+import com.gzzz.entity.Model;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
@@ -24,5 +25,15 @@ public class BrandDAO {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    public static int insertBrand(int brand_id,String brand_name,String remark) {
+        String sql = "INSERT INTO brand VALUES(?,?,?)";
+        try {
+            return runner.update(sql,brand_id,brand_name,remark);
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
     }
 }

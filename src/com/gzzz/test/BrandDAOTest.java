@@ -19,4 +19,14 @@ public class BrandDAOTest {
             System.out.println("数据库未找到品牌信息！");
         }
     }
+
+    @Test
+    public void testInsertBrand() {
+        int modifyCount = BrandDAO.insertBrand(1004,"奔驰","");
+        if (modifyCount != 0) {
+            System.out.println(modifyCount);
+        } else {
+            System.out.println("数据未添加或已存在！");
+        }
+    }
 }
