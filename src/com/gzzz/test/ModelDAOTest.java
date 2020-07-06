@@ -23,4 +23,9 @@ public class ModelDAOTest {
         int model = ModelDAO.removeModel(100101);
         System.out.println("删除的二手车数据数:" + model);
     }
+    @Test
+    public void testinsertModel() {
+        int model = ModelDAO.insertModel(100101,1001,"A4L");
+        System.out.println(model);
+    }
 }

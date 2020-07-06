@@ -33,5 +33,14 @@ public class ModelDAO {
         }
         return 0;
     }
+    public static int insertModel(int model_id,int brand_id,String model_name) {
+        String sql = "INSERT INTO model(model_id, brand_id,model_name) VALUES (?, ?,?); ";
+        try {
+            return runner.update(sql,model_id,brand_id,model_name) ;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
 }
 
