@@ -1,5 +1,7 @@
 package com.gzzz.entity;
 
+import java.util.List;
+
 /**
  * Brand Class
  * @author GZZZ
@@ -17,6 +19,8 @@ public class Brand {
         this.brand_name = brand_name;
         this.remark = remark;
     }
+
+
 
     public int getBrand_id() {
         return brand_id;
@@ -41,4 +45,5 @@ public class Brand {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
 }
