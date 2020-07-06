@@ -46,10 +46,10 @@ public class CarSystem {
         sc = new Scanner(System.in);
         String startSelector = sc.next();
         switch (startSelector) {
-            case "1" -> verifyAccount();
-            case "2" -> registerAccount();
-            case "3" -> updatedCarsDisplay();
-            case "5" -> System.exit(0);
+            case "1": verifyAccount();break;
+            case "2": registerAccount();break;
+            case "3": updatedCarsDisplay();break;
+            case "5": System.exit(0);
         }
         run();
     }
@@ -59,8 +59,8 @@ public class CarSystem {
         sc = new Scanner(System.in);
         String startSelector = sc.next();
         switch (startSelector) {
-            case "1" -> updatedCarsDisplay();
-            case "3" -> System.exit(0);
+            case "1": updatedCarsDisplay();break;
+            case "3": System.exit(0);
         }
         run();
     }
@@ -70,8 +70,8 @@ public class CarSystem {
         sc = new Scanner(System.in);
         String startSelector = sc.next();
         switch (startSelector) {
-            case "1" -> updatedCarsDisplay();
-            case "4" -> System.exit(0);
+            case "1": updatedCarsDisplay();break;
+            case "4": System.exit(0);
         }
         run();
     }
