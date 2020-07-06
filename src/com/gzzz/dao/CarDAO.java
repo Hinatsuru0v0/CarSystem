@@ -1,6 +1,7 @@
 package com.gzzz.dao;
 
 import com.gzzz.entity.Car;
+import com.gzzz.entity.Model;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.sql.SQLException;
@@ -23,4 +24,14 @@ public class CarDAO {
         }
         return null;
     }
+    public static List<Model> listModelsByBrand(String brand_name){
+        String sql = "SELECT model_name FROM model,brand WHERE brand.brand_id=model.brand_id AND brand_name =?;";
+        try {
+            return runner.query(sql, new BeanListHandler<>(Model.class),brand_name);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
 }

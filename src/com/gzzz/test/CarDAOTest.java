@@ -2,9 +2,14 @@ package com.gzzz.test;
 
 import com.gzzz.dao.CarDAO;
 import com.gzzz.entity.Car;
+import com.gzzz.entity.Model;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import static com.gzzz.utils.DBUtils.runner;
 
 public class CarDAOTest {
     @Test
@@ -13,6 +18,17 @@ public class CarDAOTest {
         if (cars != null) {
             for (Car car : cars) {
                 System.out.println(car);
+            }
+        } else {
+            System.out.println("数据库未找到二手车信息！");
+        }
+    }
+    @Test
+    public void listModelsByBrand() {
+        List<Model> models = CarDAO.listModelsByBrand("奥迪");
+        if (models != null) {
+            for (Model model : models) {
+                System.out.println(model.getModel_name());
             }
         } else {
             System.out.println("数据库未找到二手车信息！");
