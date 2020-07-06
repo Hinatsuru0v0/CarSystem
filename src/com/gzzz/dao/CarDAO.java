@@ -29,7 +29,7 @@ public class CarDAO {
     public static List<Car> listCarsByModel(int model_id){
         String sql = "SELECT * FROM car WHERE model_id=?";
         try {
-            return runner.query(sql, new BeanListHandler<>(Car.class),model_id);
+            return runner.query(sql, new BeanListHandler<>(Car.class), model_id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -51,17 +51,10 @@ public class CarDAOTest {
         List<Car> cars = CarDAO.listCarsByModel(100101);
         if (cars != null) {
             for (Car car : cars) {
-                System.out.println("车辆编号：" + car.getCar_id() +
-                        "，品牌编号：" + car.getModel_id() +
-                        "，排量：" + car.getExhaust() +
-                        "，里程数："+car.getMilage()+
-                        "，价格：" +car.getPrice()+
-                        "，离合器："+car.getClutch()+
-                        "，发行时间:"+car.getIssue_time()+
-                        "，发布时间:"+car.getPublish_time());
+                System.out.println(car);
             }
         } else {
-            System.out.println("数据库未找到品牌车型信息！");
+            System.out.println("数据库未找到品牌二手车信息！");
         }
     }
 }
