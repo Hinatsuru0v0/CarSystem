@@ -179,6 +179,6 @@ public class CarSystem {
     }
 
     public void carDescription(Car car) {
-        System.out.println("品牌\t车型\t排量\t里程\t");
+        System.out.println("品牌\t车型\t排量\t总里程\t价格\t");
     }
 }

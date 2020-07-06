@@ -18,7 +18,7 @@ import static com.gzzz.utils.DBUtils.runner;
  */
 public class CarDAO {
     public static List<Car> listUpdatedCars() {
-        String sql = "SELECT * FROM car ORDER BY publish_time DESC LIMIT 10";
+        String sql = "SELECT * FROM car WHERE is_sold=false ORDER BY publish_time DESC LIMIT 10";
         try {
             return runner.query(sql, new BeanListHandler<>(Car.class));
         } catch (SQLException throwables) {
@@ -27,7 +27,7 @@ public class CarDAO {
         return null;
     }
     public static List<Car> listCarsByModel(int model_id){
-        String sql = "SELECT * FROM car WHERE model_id=?";
+        String sql = "SELECT * FROM car WHERE model_id=? AND is_sold=false";
         try {
             return runner.query(sql, new BeanListHandler<>(Car.class), model_id);
         } catch (SQLException throwables) {
@@ -36,7 +36,7 @@ public class CarDAO {
         return null;
     }
     public static Car getCar(int car_id) {
-        String sql = "SELECT * FROM car WHERE car_id = ?";
+        String sql = "SELECT * FROM car WHERE car_id=?";
         try {
             return runner.query(sql, new BeanHandler<>(Car.class), car_id);
         } catch (SQLException throwables) {
@@ -46,7 +46,7 @@ public class CarDAO {
     }
 
     public  static List<Car> listCarsByPrice(double minprice,double maxprice){
-        String sql = "SELECT * FROM car WHERE price>? AND price<?";
+        String sql = "SELECT * FROM car WHERE price>? AND price<? AND is_sold=false";
         try{
             return runner.query(sql, new BeanListHandler<>(Car.class), minprice, maxprice);
         } catch(SQLException throwables){
@@ -66,7 +66,7 @@ public class CarDAO {
     }
 
     public static List<Car> listCarsByTime(String start_time,String end_time){
-        String sql = "SELECT * FROM car WHERE ?<=publish_time  AND publish_time<=?";
+        String sql = "SELECT * FROM car WHERE ?<=publish_time AND publish_time<=? AND is_sold=false";
         try{
             return runner.query(sql, new BeanListHandler<>(Car.class), start_time, end_time);
         } catch(SQLException throwables){
