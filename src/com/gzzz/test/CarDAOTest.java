@@ -45,4 +45,14 @@ public class CarDAOTest {
             System.out.println("数据库未找到二手车信息！");
         }
     }
+
+    @Test
+    public void testInsertCar() {
+        int modifyCount = CarDAO.insertCar(1001,100102,"2.0T",100000,195800,"自动","2019-08-01");
+        if (modifyCount != 0) {
+            System.out.println(modifyCount);
+        } else {
+            System.out.println("数据未添加或已存在！");
+        }
+    }
 }

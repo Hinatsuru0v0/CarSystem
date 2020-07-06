@@ -46,4 +46,14 @@ public class CarDAO {
         }
         return null;
     }
+
+    public static int insertCar(int brand_id,int moder_id,String exhaust,int milage,int price,String clutch,String issue_time){
+        String sql = "INSERT INTO car(brand_id,moder_id,exhaust,milage,price,clutch,issue_time) VALUES(?,?,?,?,?,?,?)";
+        try {
+            return runner.update(sql,brand_id,moder_id,exhaust,milage,price,clutch,issue_time);
+        }catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
 }
