@@ -1,0 +1,26 @@
+package com.gzzz.test;
+
+import com.gzzz.dao.CarByPriceDao;
+import com.gzzz.entity.Car;
+import com.gzzz.entity.Model;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.junit.Test;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import static com.gzzz.utils.DBUtils.runner;
+
+public class CarByPriceTest {
+    @Test
+    public void testCarsByPrice() {
+        List<Car> cars = CarByPriceDao.queryCarsByPrice(200,300000);
+        if (cars != null) {
+            for (Car car : cars) {
+                System.out.println(car);
+            }
+        } else {
+            System.out.println("数据库未找到二手车信息！");
+        }
+    }
+}
