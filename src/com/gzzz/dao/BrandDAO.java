@@ -28,9 +28,9 @@ public class BrandDAO {
     }
 
     public static int insertBrand(int brand_id,String brand_name,String remark) {
-        String sql = "INSERT INTO brand VALUES(?,?,?)";
+        String sql = "INSERT INTO brand VALUES(?, ?, ?)";
         try {
-            return runner.update(sql,brand_id,brand_name,remark);
+            return runner.update(sql, brand_id, brand_name, remark);
         }catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -21,13 +21,13 @@ public class ModelDAOTest {
 
     @Test
     public void testRemoveModel() {
-        int model = ModelDAO.removeModel(100101);
-        System.out.println("删除的车型总数:" + model);
+        int modifyCount = ModelDAO.removeModel(100101);
+        System.out.println("删除的车型总数:" + modifyCount);
     }
 
     @Test
     public void testInsertModel() {
-        int model = ModelDAO.insertModel(100101,1001,"A4L", "");
-        System.out.println("添加的车型总数:" + model);
+        int modifyCount = ModelDAO.insertModel(100101,1001,"A4L", "");
+        System.out.println("添加的车型总数:" + modifyCount);
     }
 }

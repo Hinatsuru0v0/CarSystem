@@ -22,11 +22,7 @@ public class BrandDAOTest {
 
     @Test
     public void testInsertBrand() {
-        int modifyCount = BrandDAO.insertBrand(1004,"奔驰","");
-        if (modifyCount != 0) {
-            System.out.println(modifyCount);
-        } else {
-            System.out.println("数据未添加或已存在！");
-        }
+        int modifyCount = BrandDAO.insertBrand(1004, "奔驰", "");
+        System.out.println("添加的品牌总数:" + modifyCount);
     }
 }

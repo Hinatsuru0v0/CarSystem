@@ -14,6 +14,6 @@ public class UserDAOTest {
     @Test
     public void testRegisterUser() {
         int modifyCount = UserDAO.registerUser("test", "123456");
-        System.out.println("Count of register user: " + modifyCount);
+        System.out.println("添加的车型总数:" + modifyCount);
     }
 }

@@ -160,6 +160,5 @@ public class CarSystem {
         System.out.println("--------最新二手车信息--------");
         System.out.println("品牌\t车型\t里程数\t价格\t发布时间");
         List<Car> cars = CarDAO.listUpdatedCars();
-        
     }
 }
