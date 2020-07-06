@@ -23,4 +23,14 @@ public class CarDAOTest {
             System.out.println("数据库未找到二手车信息！");
         }
     }
+
+    @Test
+    public void testGetCar(int car_id) {
+        Car cars = CarDAO.getCar(car_id);
+        if (cars != null) {
+            System.out.println(cars);
+        } else {
+            System.out.println("数据库未找到二手车信息！");
+        }
+    }
 }

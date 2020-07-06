@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BrandDAOTest {
     @Test
-    public void testGetBrands() {
+    public void testListGetBrands() {
         List<Brand> brands = BrandDAO.listGetBrands();
         if (brands != null) {
             for (Brand brand : brands) {
