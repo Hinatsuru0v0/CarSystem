@@ -9,5 +9,5 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0.0
  */
 public class LogUtils {
-    private static final Logger logger = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
+    public static final Logger logger = LogManager.getLogger(LogManager.ROOT_LOGGER_NAME);
 }
