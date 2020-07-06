@@ -2,6 +2,8 @@ package com.gzzz.entity;
 
 import java.util.Date;
 
+import static com.gzzz.utils.DBUtils.simpleDateFormat;
+
 /**
  * User Class
  * @author GZZZ
@@ -102,5 +104,12 @@ public class Car {
 
     public void setPublish_time(Date publish_time) {
         this.publish_time = publish_time;
+    }
+
+    @Override
+    public String toString() {
+        return "[二手车编号:" + car_id + ", 品牌编号:" + brand_id + "车型编号:" + model_id + ", 排量:" + exhaust
+                + ", 里程:" + milage + ", 价格:" + price + ", 离合器类型:" + clutch
+                + ", 上牌时间:" + simpleDateFormat.format(issue_time) + ", 发布时间:" + simpleDateFormat.format(publish_time);
     }
 }

@@ -7,7 +7,7 @@ import org.junit.Test;
 public class UserDAOTest {
     @Test
     public void testGetUser() {
-        User user = UserDAO.getUser("test");
+        User user = UserDAO.getUser("admin");
         System.out.println(user);
     }
 

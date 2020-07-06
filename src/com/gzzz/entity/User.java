@@ -54,6 +54,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "用户名:" + username + ", 余额:" + balance + ", 是否为管理员:" + is_admin;
+        return "[用户名:" + username + ", 余额:" + balance + ", 是否为管理员:" + is_admin + "]";
     }
 }
