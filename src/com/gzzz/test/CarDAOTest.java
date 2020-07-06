@@ -1,6 +1,7 @@
 package com.gzzz.test;
 
 import com.gzzz.dao.CarDAO;
+import com.gzzz.dao.ModelDAO;
 import com.gzzz.entity.Car;
 import com.gzzz.entity.Model;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -45,14 +46,15 @@ public class CarDAOTest {
             System.out.println("数据库未找到二手车信息！");
         }
     }
-
     @Test
-    public void testInsertCar() {
-        int modifyCount = CarDAO.insertCar(1001,100102,"2.0T",100000,195800,"自动","2019-08-01");
-        if (modifyCount != 0) {
-            System.out.println(modifyCount);
+    public void listCarsByModel() {
+        List<Car> cars = CarDAO.listCarsByModel(100101);
+        if (cars != null) {
+            for (Car car : cars) {
+                System.out.println(car);
+            }
         } else {
-            System.out.println("数据未添加或已存在！");
+            System.out.println("数据库未找到品牌二手车信息！");
         }
     }
 }
