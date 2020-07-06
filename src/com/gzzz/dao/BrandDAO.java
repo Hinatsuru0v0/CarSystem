@@ -16,7 +16,7 @@ import static com.gzzz.utils.DBUtils.runner;
  * @version 1.0.0
  */
 public class BrandDAO {
-    public static List<Brand> listGetBrands() {
+    public static List<Brand> listBrands() {
         String sql = "SELECT * FROM brand";
         try {
             return runner.query(sql,new BeanListHandler<>(Brand.class));

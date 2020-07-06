@@ -120,6 +120,6 @@ public class Car {
     public String toString() {
         return "[二手车编号:" + car_id + ", 品牌编号:" + brand_id + "车型编号:" + model_id + ", 排量:" + exhaust
                 + ", 里程:" + milage + ", 价格:" + price + ", 离合器类型:" + clutch
-                + ", 上牌时间:" + simpleDateFormat.format(issue_time) + ", 发布时间:" + simpleDateFormat.format(publish_time);
+                + ", 上牌时间:" + simpleDateFormat.format(issue_time) + ", 发布时间:" + simpleDateFormat.format(publish_time) + "]";
     }
 }

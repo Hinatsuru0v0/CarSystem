@@ -27,9 +27,21 @@ public class CarDAOTest {
 
     @Test
     public void testGetCar() {
-        Car cars = CarDAO.getCar(1);
+        Car car = CarDAO.getCar(1);
+        if (car != null) {
+            System.out.println(car);
+        } else {
+            System.out.println("数据库未找到二手车信息！");
+        }
+    }
+
+    @Test
+    public void testListCarsByPrice() {
+        List<Car> cars = CarDAO.listCarsByPrice(200000, 300000);
         if (cars != null) {
-            System.out.println(cars);
+            for (Car car : cars) {
+                System.out.println(car);
+            }
         } else {
             System.out.println("数据库未找到二手车信息！");
         }

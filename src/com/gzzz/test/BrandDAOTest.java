@@ -9,11 +9,11 @@ import java.util.List;
 
 public class BrandDAOTest {
     @Test
-    public void testListGetBrands() {
-        List<Brand> brands = BrandDAO.listGetBrands();
+    public void testListBrands() {
+        List<Brand> brands = BrandDAO.listBrands();
         if (brands != null) {
             for (Brand brand : brands) {
-                System.out.println("品牌编号：" + brand.getBrand_id() + "，品牌名：" + brand.getBrand_name() + "，备注：" + brand.getRemark());
+                System.out.println("品牌名:" + brand.getBrand_name());
             }
         } else {
             System.out.println("数据库未找到品牌信息！");
