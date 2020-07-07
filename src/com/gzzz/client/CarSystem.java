@@ -30,6 +30,7 @@ import static com.gzzz.utils.LogUtils.logger;
 public class CarSystem {
     Scanner sc = new Scanner(System.in);
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    private final String pattern = "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$";
 
     boolean is_login = false;
     boolean is_admin = false;
@@ -386,16 +387,34 @@ public class CarSystem {
     public void findCarsByTime() {
         System.out.println();
         System.out.print("请输入要搜索的起始年份: ");
-        String start_year = sc.next();
-        System.out.print("请输入要搜索的起始月份: ");
-        String start_month = sc.next();
+        int start_year = Integer.parseInt(sc.next());
+        int start_month;
+        do {
+            System.out.print("请输入要搜索的起始月份: ");
+            start_month = Integer.parseInt(sc.next());
+            if (1>start_month || start_month>12) {
+                System.out.println("请输入正确的月份区间(1-12)！");
+            }
+        } while (1>start_month || start_month>12);
         System.out.println("----------------");
         System.out.print("请输入要搜索的结束年份: ");
-        String end_year = sc.next();
-        System.out.print("请输入要搜索的结束月份: ");
-        String end_month = sc.next();
+        int end_year = Integer.parseInt(sc.next());
+        int end_month;
+        do {
+            System.out.print("请输入要搜索的结束月份: ");
+            end_month = Integer.parseInt(sc.next());
+            if (1>end_month || end_month>12) {
+                System.out.println("请输入正确的月份区间(1-12)！");
+            }
+        } while (1>end_month || end_month>12);
+        if ((start_year > end_year) || (start_year==end_year && start_month>=end_month)) {
+            System.out.println();
+            System.out.println("请确认起始时间早于结束时间！");
+            await();
+            return;
+        }
         String start_time = start_year + "-" + start_month + "-" + "01";
-        String end_time = end_year + "-" + end_month + "-" + DateUtils.monthOfYear(Integer.parseInt(end_year), Integer.parseInt(end_month));
+        String end_time = end_year + "-" + end_month + "-" + DateUtils.monthOfYear(end_year, end_month);
         CarsDisplay(CarDAO.listCarsByTime(start_time, end_time));
     }
 
@@ -462,8 +481,6 @@ public class CarSystem {
     }
 
     public void addCar() {
-        String pattern = "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$";
-
         Brand brand = findBrands();
         Model model = findModels(brand);
         System.out.println();
