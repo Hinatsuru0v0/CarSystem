@@ -283,7 +283,7 @@ public class CarSystem {
         System.out.println("品牌\t车型\t排量\t\t总里程\t离合器类型\t价格\t\t上牌时间\t\t发布时间");
         System.out.println(BrandDAO.getBrand(car.getBrand_id()).getBrand_name() + "\t" + ModelDAO.getModel(car.getModel_id()).getModel_name() + "\t"
                 + car.getExhaust() + "\t" + decimalFormat.format(car.getMilage()/10000.0) + "万" + "\t" + car.getClutch() + "\t\t\t"
-                + decimalFormat.format(car.getPrice()/10000.0) + "万" + "\t" + simpleDateFormat.format(car.getIssue_time())  + "\t" + simpleDateFormat.format(car.getIssue_time()));
+                + decimalFormat.format(car.getPrice()/10000.0) + "万" + "\t" + simpleDateFormat.format(car.getIssue_time())  + "\t" + simpleDateFormat.format(car.getPublish_time()));
         carPurchase(car);
     }
 
