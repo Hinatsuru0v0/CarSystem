@@ -17,6 +17,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import static com.gzzz.utils.DBUtils.simpleDateFormat;
 import static com.gzzz.utils.LogUtils.logger;
@@ -76,6 +77,7 @@ public class CarSystem {
         switch (startSelector) {
             case "1": updatedCarsDisplay();break;
             case "2": runFind();break;
+            case "3": runAdmin();
             case "4": System.exit(0);break;
         }
         run();
@@ -92,6 +94,31 @@ public class CarSystem {
             case "4": run();break;
         }
         runFind();
+    }
+
+    public void runAdmin() {
+        adminStartMenu();
+        sc = new Scanner(System.in);
+        String fSelector = sc.next();
+        switch (fSelector) {
+            case "1": addBrand();break;
+            case "2": runModelAdmin();break;
+            case "3": addCar();break;
+            case "4": run();break;
+        }
+        runAdmin();
+    }
+
+    public void runModelAdmin() {
+        adminCarMenu();
+        sc = new Scanner(System.in);
+        String fSelector = sc.next();
+        switch (fSelector) {
+            case "1": addModel();break;
+            case "2": deleteModel();break;
+            case "3": runAdmin();break;
+        }
+        runModelAdmin();
     }
 
     public void await() {
@@ -140,7 +167,7 @@ public class CarSystem {
             } while(!password.equals(sc.next()));
             System.out.println();
             if (UserDAO.registerUser(username, password) == 1) {
-                System.out.println(username + "用户注册成功，请记住你的密码:" + password);
+                System.out.println(username + "用户注册成功，请记住你的密码: " + password);
             } else {
                 System.out.println(username + "由于系统故障，注册失败，请稍后重试！");
             }
@@ -199,6 +226,25 @@ public class CarSystem {
         System.out.print("请输入要选择的价格区间: ");
     }
 
+    public void adminStartMenu() {
+        System.out.println();
+        System.out.println("--------管理员面板--------");
+        System.out.println("1.品牌管理");
+        System.out.println("2.车型管理");
+        System.out.println("3.发布车辆信息");
+        System.out.println("4.返回主菜单");
+        System.out.print("请输入要执行的方法代号: ");
+    }
+
+    public void adminCarMenu() {
+        System.out.println();
+        System.out.println("--------车型管理面板--------");
+        System.out.println("1.添加车型");
+        System.out.println("2.删除车型");
+        System.out.println("3.返回管理员面板");
+        System.out.print("请输入要执行的方法代号: ");
+    }
+
     public void updatedCarsDisplay() {
         CarsDisplay(CarDAO.listUpdatedCars());
     }
@@ -214,8 +260,17 @@ public class CarSystem {
                 + "\t" + decimalFormat.format(car.getMilage()/10000.0) + "万" + "\t" + decimalFormat.format(car.getPrice()/10000.0) + "万" + "\t"
                 + simpleDateFormat.format(car.getPublish_time()));
             }
-            System.out.print("请输入你要查看的二手车序号: ");
-            carDescription(cars.get(Integer.parseInt(sc.next())-1));
+            int selected;
+            do {
+                System.out.println();
+                System.out.print("请输入你要查看的二手车序号: ");
+                selected = Integer.parseInt(sc.next())-1;
+                if (cars.size() > selected && selected > -1) {
+                    carDescription(cars.get(selected));
+                } else {
+                    System.out.println("请输入正确的二手车序号！");
+                }
+            } while(cars.size() <= selected || selected <= -1);
         } else {
             System.out.println("暂无二手车信息！请稍后再试！");
             await();
@@ -263,7 +318,17 @@ public class CarSystem {
             for (Brand brand: brands) {
                 System.out.println(id++ +"."+ brand.getBrand_name());
             }
-            System.out.print("请输入你要查看的二手车品牌: ");
+            int selected;
+            do {
+                System.out.println();
+                System.out.print("请输入你要查看的二手车品牌序号: ");
+                selected = Integer.parseInt(sc.next())-1;
+                if (brands.size() > selected && selected > -1) {
+                    return brands.get(selected);
+                } else {
+                    System.out.println("请输入正确的二手车品牌序号！");
+                }
+            } while(brands.size() <= selected || selected <= -1);
             return brands.get(Integer.parseInt(sc.next())-1);
         } else {
             System.out.println("暂无二手车品牌信息！请稍后再试！");
@@ -281,7 +346,17 @@ public class CarSystem {
             for (Model model: models) {
                 System.out.println(id++ + "." + model.getModel_name());
             }
-            System.out.print("请输入你要查看的二手车车型: ");
+            int selected;
+            do {
+                System.out.println();
+                System.out.print("请输入你要查看的二手车车型序号: ");
+                selected = Integer.parseInt(sc.next())-1;
+                if (models.size() > selected && selected > -1) {
+                    return models.get(selected);
+                } else {
+                    System.out.println("请输入正确的二手车车型序号！");
+                }
+            } while(models.size() <= selected || selected <= -1);
             return models.get(Integer.parseInt(sc.next())-1);
         } else {
             System.out.println("暂无二手车车型信息！请稍后再试！");
@@ -310,18 +385,116 @@ public class CarSystem {
 
     public void findCarsByTime() {
         System.out.println();
-        System.out.print("请输入要搜索的起始年份:");
+        System.out.print("请输入要搜索的起始年份: ");
         String start_year = sc.next();
-        System.out.print("请输入要搜索的起始月份:");
+        System.out.print("请输入要搜索的起始月份: ");
         String start_month = sc.next();
         System.out.println("----------------");
-        System.out.print("请输入要搜索的结束年份:");
+        System.out.print("请输入要搜索的结束年份: ");
         String end_year = sc.next();
-        System.out.print("请输入要搜索的结束月份:");
+        System.out.print("请输入要搜索的结束月份: ");
         String end_month = sc.next();
         String start_time = start_year + "-" + start_month + "-" + "01";
         String end_time = end_year + "-" + end_month + "-" + DateUtils.monthOfYear(Integer.parseInt(end_year), Integer.parseInt(end_month));
         CarsDisplay(CarDAO.listCarsByTime(start_time, end_time));
+    }
 
+    public void addBrand() {
+        System.out.println();
+        System.out.println("--------添加二手车品牌--------");
+        System.out.print("请输入二手车品牌名: ");
+        String brand_name = sc.next();
+        sc = new Scanner(System.in);
+        System.out.print("请输入二手车品牌备注: ");
+        String remark = sc.nextLine();
+        int brand_id = BrandDAO.updatedBrandId()+1;
+        System.out.println("即将添加的数据:[品牌编号:" + brand_id + ", 品牌名:" + brand_name + ", 备注:" + remark + "]");
+        System.out.print("是否确认添加品牌数据(Y-添加数据/任意键-返回):");
+        sc = new Scanner(System.in);
+        String rSelector = sc.nextLine();
+        if ("y".equalsIgnoreCase(rSelector)) {
+            BrandDAO.insertBrand(brand_id, brand_name, remark);
+            System.out.println("品牌数据添加成功！");
+        } else {
+            System.out.println("品牌数据未添加！");
+        }
+        await();
+    }
+
+    public void addModel() {
+        Brand brand = findBrands();
+        System.out.println();
+        System.out.println("--------添加二手车车型--------");
+        System.out.print("请输入二手车车型名: ");
+        String model_name = sc.next();
+        sc = new Scanner(System.in);
+        System.out.print("请输入二手车车型备注: ");
+        String remark = sc.nextLine();
+        int model_id = ModelDAO.updatedModelId(brand.getBrand_id())+1;
+        System.out.println("即将添加的数据:[车型编号:" + model_id + ", 车型名:" + model_name + ", 备注:" + remark + "]");
+        System.out.print("是否确认添加车型数据(Y-添加数据/任意键-返回):");
+        sc = new Scanner(System.in);
+        String rSelector = sc.nextLine();
+        if ("y".equalsIgnoreCase(rSelector)) {
+            ModelDAO.insertModel(model_id, brand.getBrand_id(), model_name, remark);
+            System.out.println("车型数据添加成功！");
+        } else {
+            System.out.println("车型数据未添加！");
+        }
+        await();
+    }
+
+    public void deleteModel() {
+        Model model = findModels(findBrands());
+        System.out.println();
+        System.out.println("--------删除二手车车型--------");
+        System.out.println("即将删除的数据:[车型编号:" + model.getModel_id() + ", 车型名:" + model.getModel_name() + ", 备注:" + model.getRemark() + "]");
+        System.out.print("是否确认删除车型数据(Y-添加数据/任意键-返回):");
+        sc = new Scanner(System.in);
+        String rSelector = sc.nextLine();
+        if ("y".equalsIgnoreCase(rSelector)) {
+            ModelDAO.removeModel(model.getModel_id());
+            System.out.println("车型数据删除成功！");
+        } else {
+            System.out.println("车型数据未删除！");
+        }
+        await();
+    }
+
+    public void addCar() {
+        String pattern = "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$";
+
+        Brand brand = findBrands();
+        Model model = findModels(brand);
+        System.out.println();
+        System.out.println("--------添加二手车售卖--------");
+        System.out.print("请输入二手车排量: ");
+        String exhaust = sc.next();
+        System.out.print("请输入二手车变速器类型(自动/手动): ");
+        String clutch = sc.next();
+        System.out.print("请输入二手车总里程(m): ");
+        int milage = Integer.parseInt(sc.next());
+        System.out.print("请输入二手车价格(rmb): ");
+        int price = Integer.parseInt(sc.next());
+        String issue_time;
+        do {
+            System.out.print("请输入二手车上牌时间(yyyy-MM-dd): ");
+            issue_time = sc.next();
+            if (!Pattern.matches(pattern, issue_time)) {
+                System.out.println("请确认上牌时间数据的格式(2020-05-25)!");
+            }
+        } while (!Pattern.matches(pattern, issue_time));
+        System.out.println("即将添加的数据:[品牌:" + brand.getBrand_name() + "车型:" + model.getModel_name() + ", 排量:" + exhaust
+                + ", 里程:" + milage + ", 价格:" + price + ", 离合器类型:" + clutch + "]");
+        System.out.print("是否确认添加二手车(Y-添加数据/任意键-返回):");
+        sc = new Scanner(System.in);
+        String rSelector = sc.nextLine();
+        if ("y".equalsIgnoreCase(rSelector)) {
+            CarDAO.insertCar(brand.getBrand_id(), model.getModel_id(), exhaust, milage, price, clutch, issue_time);
+            System.out.println("二手车数据添加成功！");
+        } else {
+            System.out.println("二手车数据未添加！");
+        }
+        await();
     }
 }

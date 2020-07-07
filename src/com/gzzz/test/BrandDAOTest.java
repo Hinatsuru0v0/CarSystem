@@ -35,4 +35,10 @@ public class BrandDAOTest {
         int modifyCount = BrandDAO.insertBrand(1004, "奔驰", "");
         System.out.println("添加的品牌总数:" + modifyCount);
     }
+
+    @Test
+    public void testUpdatedBrandId() {
+        int brand_id = BrandDAO.updatedBrandId();
+        System.out.println("最新的品牌编号:" + brand_id);
+    }
 }

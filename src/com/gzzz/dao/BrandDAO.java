@@ -4,6 +4,7 @@ import com.gzzz.entity.Brand;
 import com.gzzz.entity.Model;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 
 import java.sql.SQLException;
@@ -37,7 +38,7 @@ public class BrandDAO {
         return null;
     }
 
-    public static int insertBrand(int brand_id,String brand_name,String remark) {
+    public static int insertBrand(int brand_id, String brand_name, String remark) {
         String sql = "INSERT INTO brand VALUES(?, ?, ?)";
         try {
             return runner.update(sql, brand_id, brand_name, remark);
@@ -45,5 +46,15 @@ public class BrandDAO {
             throwables.printStackTrace();
         }
         return 0;
+    }
+
+    public static int updatedBrandId() {
+        String sql = "SELECT brand_id FROM brand ORDER BY brand_id DESC LIMIT 1";
+        try {
+            return runner.query(sql, new ScalarHandler<Integer>());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 1001;
     }
 }

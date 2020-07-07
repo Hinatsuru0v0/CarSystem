@@ -3,6 +3,7 @@ package com.gzzz.dao;
 import com.gzzz.entity.Model;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -49,6 +50,16 @@ public class ModelDAO {
         String sql = "INSERT INTO model VALUES (?, ?, ?, ?); ";
         try {
             return runner.update(sql, model_id, brand_id, model_name, remark);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static int updatedModelId(int brand_id) {
+        String sql = "SELECT model_id FROM model WHERE brand_id=? ORDER BY model_id DESC limit 1";
+        try {
+            return runner.query(sql, new ScalarHandler<Integer>(), brand_id);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

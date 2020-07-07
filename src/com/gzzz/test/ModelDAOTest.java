@@ -40,4 +40,10 @@ public class ModelDAOTest {
         int modifyCount = ModelDAO.insertModel(100101,1001,"A4L", "");
         System.out.println("添加的车型总数:" + modifyCount);
     }
+
+    @Test
+    public void testUpdatedModelId() {
+        int model_id = ModelDAO.updatedModelId(1001);
+        System.out.println("最新的车型编号:" + model_id);
+    }
 }
