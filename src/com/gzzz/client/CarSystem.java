@@ -289,7 +289,7 @@ public class CarSystem {
 
     public void CarsDisplay(List<Car> cars) {
         System.out.println();
-        System.out.println("--------最新二手车信息--------");
+        System.out.println("--------二手车信息--------");
         System.out.println("序号\t品牌\t车型\t总里程\t价格\t\t发布时间");
         int id = 1;
         if (!cars.isEmpty()) {
@@ -477,7 +477,10 @@ public class CarSystem {
         sc = new Scanner(System.in);
         System.out.print("请输入二手车品牌备注: ");
         String remark = sc.nextLine();
-        int brand_id = BrandDAO.updatedBrandId()+1;
+        int brand_id = 1001;
+        if (!BrandDAO.listBrands().isEmpty()) {
+            brand_id = BrandDAO.updatedBrandId()+1;
+        }
         System.out.println("即将添加的数据:[品牌编号:" + brand_id + ", 品牌名:" + brand_name + ", 备注:" + remark + "]");
         System.out.print("是否确认添加品牌数据(Y-添加数据/任意键-返回):");
         sc = new Scanner(System.in);
