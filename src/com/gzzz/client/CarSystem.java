@@ -409,6 +409,7 @@ public class CarSystem {
             logger.error("二手车数量不足！");
             System.out.println("暂无二手车车型信息！请稍后再试！");
             await();
+            run();
         }
         return null;
     }
@@ -499,7 +500,10 @@ public class CarSystem {
         sc = new Scanner(System.in);
         System.out.print("请输入二手车车型备注: ");
         String remark = sc.nextLine();
-        int model_id = ModelDAO.updatedModelId(brand.getBrand_id())+1;
+        int model_id = Integer.parseInt(brand.getBrand_id() + "01");
+        if (!ModelDAO.listModelsByBrand(brand.getBrand_id()).isEmpty()) {
+            model_id = ModelDAO.updatedModelId(brand.getBrand_id())+1;
+        }
         System.out.println("即将添加的数据:[车型编号:" + model_id + ", 车型名:" + model_name + ", 备注:" + remark + "]");
         System.out.print("是否确认添加车型数据(Y-添加数据/任意键-返回):");
         sc = new Scanner(System.in);
