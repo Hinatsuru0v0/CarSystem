@@ -174,6 +174,7 @@ public class CarSystem {
             if (UserDAO.registerUser(username, password) == 1) {
                 System.out.println(username + "用户注册成功，请记住你的密码: " + password);
             } else {
+                logger.error("注册时发生系统故障！");
                 System.out.println(username + "由于系统故障，注册失败，请稍后重试！");
             }
         }
@@ -305,10 +306,12 @@ public class CarSystem {
                 if (cars.size() > selected && selected > -1) {
                     carDescription(cars.get(selected));
                 } else {
+                    logger.error("输入不符合规则的数据！输入的数据：" + selected);
                     System.out.println("请输入正确的二手车序号！");
                 }
             } while(cars.size() <= selected || selected <= -1);
         } else {
+            logger.error("二手车数量不足！");
             System.out.println("暂无二手车信息！请稍后再试！");
             await();
         }
@@ -339,6 +342,7 @@ public class CarSystem {
                     UserDAO.updateBalance(user.getUsername(), -car.getPrice());
                     System.out.println("购买成功！已从您的余额中扣除相应款项: " + car.getPrice());
                 } else {
+                    logger.error("购买时发生系统故障！");
                     System.out.println("购买失败，请稍后再试！！");
                 }
             } else if ("2".equals(pSelector)) {
@@ -367,11 +371,13 @@ public class CarSystem {
                 if (brands.size() > selected && selected > -1) {
                     return brands.get(selected);
                 } else {
+                    logger.error("输入不符合规则的数据！输入的数据：" + selected);
                     System.out.println("请输入正确的二手车品牌序号！");
                 }
             } while(brands.size() <= selected || selected <= -1);
             return brands.get(Integer.parseInt(sc.next())-1);
         } else {
+            logger.error("二手车数量不足！");
             System.out.println("暂无二手车品牌信息！请稍后再试！");
             await();
         }
@@ -395,11 +401,13 @@ public class CarSystem {
                 if (models.size() > selected && selected > -1) {
                     return models.get(selected);
                 } else {
+                    logger.error("输入不符合规则的数据！输入的数据：" + selected);
                     System.out.println("请输入正确的二手车车型序号！");
                 }
             } while(models.size() <= selected || selected <= -1);
             return models.get(Integer.parseInt(sc.next())-1);
         } else {
+            logger.error("二手车数量不足！");
             System.out.println("暂无二手车车型信息！请稍后再试！");
             await();
         }
@@ -433,6 +441,7 @@ public class CarSystem {
             System.out.print("请输入要搜索的起始月份: ");
             start_month = Integer.parseInt(sc.next());
             if (1>start_month || start_month>12) {
+                logger.error("输入不符合规则的数据！输入的数据：" + start_month);
                 System.out.println("请输入正确的月份区间(1-12)！");
             }
         } while (1>start_month || start_month>12);
@@ -444,11 +453,13 @@ public class CarSystem {
             System.out.print("请输入要搜索的结束月份: ");
             end_month = Integer.parseInt(sc.next());
             if (1>end_month || end_month>12) {
+                logger.error("输入不符合规则的数据！输入的数据：" + end_month);
                 System.out.println("请输入正确的月份区间(1-12)！");
             }
         } while (1>end_month || end_month>12);
         if ((start_year > end_year) || (start_year==end_year && start_month>=end_month)) {
             System.out.println();
+            logger.error("输入不符合规则的数据！输入的数据：" + start_year + " " +start_month + " " + end_year + " " + end_month);
             System.out.println("请确认起始时间早于结束时间！");
             await();
             return;
@@ -539,6 +550,7 @@ public class CarSystem {
             System.out.print("请输入二手车上牌时间(yyyy-MM-dd): ");
             issue_time = sc.next();
             if (!Pattern.matches(pattern, issue_time)) {
+                logger.error("输入不符合规则的数据！输入的数据：" + issue_time);
                 System.out.println("请确认上牌时间数据的格式(2020-05-25)!");
             }
         } while (!Pattern.matches(pattern, issue_time));
