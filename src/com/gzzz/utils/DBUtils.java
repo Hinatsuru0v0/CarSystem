@@ -15,5 +15,5 @@ public class DBUtils {
 
     public static final QueryRunner runner = new QueryRunner(dataSource);
 
-    public static final  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 }
