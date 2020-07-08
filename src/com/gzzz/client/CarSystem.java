@@ -328,7 +328,6 @@ public class CarSystem {
     }
 
     public void carPurchase(Car car) {
-        updateUserInfo();
         if (is_login) {
             System.out.println("1.余额购买");
             System.out.println("2.返回主菜单");
