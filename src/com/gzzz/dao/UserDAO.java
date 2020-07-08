@@ -34,4 +34,14 @@ public class UserDAO {
         }
         return 0;
     }
+
+    public static int updateBalance(String username, int balance) {
+        String sql = "UPDATE user SET balance=balance+? WHERE username=?";
+        try {
+            return runner.update(sql, balance, username);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return 0;
+    }
 }

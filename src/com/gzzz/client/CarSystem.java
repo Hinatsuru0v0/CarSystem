@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -28,9 +27,9 @@ import static com.gzzz.utils.LogUtils.logger;
  * @version 1.0.0
  */
 public class CarSystem {
-    Scanner sc = new Scanner(System.in);
-    DecimalFormat decimalFormat = new DecimalFormat("0.00");
-    private final String pattern = "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$";
+    private Scanner sc = new Scanner(System.in);
+    private final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    private User user = null;
 
     boolean is_login = false;
     boolean is_admin = false;
@@ -60,26 +59,30 @@ public class CarSystem {
     }
 
     public void runAsUser() {
+        updateUserInfo();
         startLoginInMenu();
         sc = new Scanner(System.in);
         String startSelector = sc.next();
         switch (startSelector) {
             case "1": updatedCarsDisplay();break;
             case "2": runFind();break;
-            case "3": System.exit(0);break;
+            case "3": depositCash();break;
+            case "4": System.exit(0);break;
         }
         run();
     }
 
     public void runAsAdmin() {
+        updateUserInfo();
         startAdminMenu();
         sc = new Scanner(System.in);
         String startSelector = sc.next();
         switch (startSelector) {
             case "1": updatedCarsDisplay();break;
             case "2": runFind();break;
-            case "3": runAdmin();
-            case "4": System.exit(0);break;
+            case "3": depositCash();break;
+            case "4": runAdmin();
+            case "5": System.exit(0);break;
         }
         run();
     }
@@ -141,6 +144,7 @@ public class CarSystem {
         User currentUser = UserDAO.getUser(username);
         System.out.println();
         if (currentUser!=null && password.equals(currentUser.getPassword())) {
+            user = currentUser;
             is_login = true;
             is_admin = currentUser.isIs_admin();
             System.out.println("登陆成功！");
@@ -177,6 +181,9 @@ public class CarSystem {
         run();
     }
 
+    public void updateUserInfo() {
+        user = UserDAO.getUser(user.getUsername());
+    }
 
     public void startNoLoginMenu() {
         System.out.println();
@@ -192,19 +199,27 @@ public class CarSystem {
     public void startLoginInMenu() {
         System.out.println();
         System.out.println("--------Java二手车交易系统--------");
+        System.out.println("当前用户: " + user.getUsername());
+        System.out.println("当前余额: " + user.getBalance());
+        System.out.println("----------------");
         System.out.println("1.最新二手车信息");
         System.out.println("2.搜索车辆");
-        System.out.println("3.退出系统");
+        System.out.println("3.存入资金");
+        System.out.println("4.退出系统");
         System.out.print("请输入要执行的方法代号: ");
     }
 
     public void startAdminMenu() {
         System.out.println();
         System.out.println("--------Java二手车交易系统--------");
+        System.out.println("当前用户: " + user.getUsername());
+        System.out.println("当前余额: " + user.getBalance());
+        System.out.println("----------------");
         System.out.println("1.最新二手车信息");
         System.out.println("2.搜索车辆");
-        System.out.println("3.后台管理");
-        System.out.println("4.退出系统");
+        System.out.println("3.存入资金");
+        System.out.println("4.后台管理");
+        System.out.println("5.退出系统");
         System.out.print("请输入要执行的方法代号: ");
     }
 
@@ -244,6 +259,27 @@ public class CarSystem {
         System.out.println("2.删除车型");
         System.out.println("3.返回管理员面板");
         System.out.print("请输入要执行的方法代号: ");
+    }
+
+    public void depositCash() {
+        System.out.println();
+        System.out.println("--------用户存款--------");
+        System.out.print("请输入存款数额: ");
+        String received = sc.next();
+        int deposit = (int)(Double.parseDouble(received));
+        if (deposit < 0) {
+            deposit = 0;
+        }
+        System.out.print("是否确认存入账户" + deposit + "元(Y-添加数据/任意键-返回):");
+        sc = new Scanner(System.in);
+        String rSelector = sc.nextLine();
+        if ("y".equalsIgnoreCase(rSelector)) {
+            UserDAO.updateBalance(user.getUsername(), deposit);
+            System.out.println("款项存入成功！");
+        } else {
+            System.out.println("款项存入失败！");
+        }
+        await();
     }
 
     public void updatedCarsDisplay() {
@@ -289,15 +325,19 @@ public class CarSystem {
     }
 
     public void carPurchase(Car car) {
+        updateUserInfo();
         if (is_login) {
-            System.out.println("1.购买该二手车");
+            System.out.println("1.余额购买");
             System.out.println("2.返回主菜单");
             System.out.print("请输入要执行的方法代号: ");
             String pSelector = sc.next();
             if ("1".equals(pSelector)) {
                 System.out.println();
-                if (CarDAO.updateSoldCar(car.getCar_id()) == 1) {
-                    System.out.println("购买成功！");
+                if (car.getPrice() > user.getBalance()) {
+                    System.out.println("余额不足！请尽快存入相应款项！");
+                } else if (CarDAO.updateSoldCar(car.getCar_id()) == 1) {
+                    UserDAO.updateBalance(user.getUsername(), -car.getPrice());
+                    System.out.println("购买成功！已从您的余额中扣除相应款项: " + car.getPrice());
                 } else {
                     System.out.println("购买失败，请稍后再试！！");
                 }
@@ -494,6 +534,7 @@ public class CarSystem {
         System.out.print("请输入二手车价格(rmb): ");
         int price = Integer.parseInt(sc.next());
         String issue_time;
+        String pattern = "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$";
         do {
             System.out.print("请输入二手车上牌时间(yyyy-MM-dd): ");
             issue_time = sc.next();

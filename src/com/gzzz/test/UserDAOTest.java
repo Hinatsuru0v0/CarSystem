@@ -20,4 +20,10 @@ public class UserDAOTest {
         int modifyCount = UserDAO.registerUser("test", "123456");
         System.out.println("注册的用户总数:" + modifyCount);
     }
+
+    @Test
+    public void testUpdateBalance() {
+        int modifyCount = UserDAO.updateBalance("admin", 1);
+        System.out.println("被修改的数据总数:" + modifyCount);
+    }
 }
